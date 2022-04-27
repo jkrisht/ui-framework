@@ -1,17 +1,22 @@
+import amazon.components.enums.AllHamburgerMenu;
+import amazon.components.enums.Filter;
+import amazon.components.enums.FilterOption;
+import amazon.components.enums.HamburgerSubMenu;
 import amazon.config.EnvFactory;
 import amazon.factories.DriverFactory;
+import amazon.factories.PageFactory;
+import amazon.pages.HomePage;
+import amazon.pages.ProductResultsPage;
+import amazon.utils.AmazonDriver;
 import com.typesafe.config.Config;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSandbox {
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final String HOME_PAGE_URL = config.getString("HOME_PAGE_URL");
-    private WebDriver driver = DriverFactory.getDriver();
+    private AmazonDriver driver = new AmazonDriver(DriverFactory.getDriver());
 
     @Tag("smokeTest")
     @DisplayName("This test is for demo purpose only to show that the basic code works." +
@@ -19,6 +24,13 @@ public class TestSandbox {
     @Test
     void assertThatHomePageTitleIsCorrect() {
         driver.get(HOME_PAGE_URL);
-        assertEquals("Amazon.com. Spend less. Smile more.", driver.getTitle());
+        HomePage homePage = PageFactory.homePage(driver);
+        homePage.waitForPageLoad();
+        homePage.closeGlowToasterModal();
+        ProductResultsPage productResultsPage =
+                homePage.clickHamburgerMenuLinksUnderAllNav(AllHamburgerMenu.COMPUTERS, HamburgerSubMenu.COMPUTER_COMPONENTS);
+        productResultsPage.waitForPageLoad();
+        productResultsPage.filterComponent().applyFilter(Filter.SELLER, FilterOption.SELLER_AMAZON);
+
     }
 }

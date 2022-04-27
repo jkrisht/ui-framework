@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class AmazonDriver {
-    private ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
+    private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     private Logger logger = Logger.getLogger(AmazonDriver.class);
 
     public AmazonDriver(WebDriver driver) {

@@ -1,7 +1,6 @@
 package amazon.pages;
 
 import amazon.components.GlowToasterModal;
-import amazon.components.MainNavComponent;
 import amazon.factories.BundleFile;
 import amazon.utils.AmazonDriver;
 import amazon.utils.PropertiesUtil;
@@ -17,7 +16,7 @@ public class HomePage extends BasePage {
     }
 
     public GlowToasterModal glowToasterModal() {
-        return new GlowToasterModal(driver, BundleFile.HOMEPAGE);
+        return new GlowToasterModal(driver, BundleFile.HOME_PAGE);
     }
 
     public By searchBox() {

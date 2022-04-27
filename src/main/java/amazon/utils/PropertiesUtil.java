@@ -23,7 +23,7 @@ public class PropertiesUtil {
             File file = new File(filePath);
             URL[] urls = {file.toURI().toURL()};
             ClassLoader loader = new URLClassLoader(urls);
-            bundle = ResourceBundle.getBundle("HomePage", Locale.getDefault(), loader);
+            bundle = ResourceBundle.getBundle(bundleFile.getName(), Locale.getDefault(), loader);
         } catch (MalformedURLException e) {
             String message = String.format("Failed to read the %s properties file", bundleFile.getName());
             logger.error(message, e);

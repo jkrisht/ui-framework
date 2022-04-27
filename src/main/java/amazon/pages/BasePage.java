@@ -6,6 +6,7 @@ import amazon.components.enums.AllHamburgerMenu;
 import amazon.components.enums.HamburgerSubMenu;
 import amazon.components.enums.MainNav;
 import amazon.factories.BundleFile;
+import amazon.factories.PageFactory;
 import amazon.utils.AmazonDriver;
 import org.apache.log4j.Logger;
 
@@ -21,11 +22,11 @@ public abstract class BasePage implements IPage {
     ResourceBundle bundle;
 
     public MainNavComponent mainNavComponent() {
-        return new MainNavComponent(driver, BundleFile.HOMEPAGE);
+        return new MainNavComponent(driver, BundleFile.HOME_PAGE);
     }
 
     public AllHamburgerMenuComponent allHamburgerMenuComponent() {
-        return new AllHamburgerMenuComponent(driver, BundleFile.HOMEPAGE);
+        return new AllHamburgerMenuComponent(driver, BundleFile.HOME_PAGE);
     }
 
     // Click the given menu nav link
@@ -35,9 +36,10 @@ public abstract class BasePage implements IPage {
     }
 
     // Click All menu option and select Hamburger menu and sub-menu links
-    public void clickHamburgerMenuLinksUnderAllNav(AllHamburgerMenu menu, HamburgerSubMenu subMenu) {
+    public ProductResultsPage clickHamburgerMenuLinksUnderAllNav(AllHamburgerMenu menu, HamburgerSubMenu subMenu) {
         logger.info("clickHamburgerMenuLinksUnderAllNav(): " + menu.getName() + ", " + subMenu.getName());
         clickMenuNav(MainNav.ALL);
         allHamburgerMenuComponent().navigateToResultsPage(menu, subMenu);
+        return PageFactory.productResultsPage(driver);
     }
 }
