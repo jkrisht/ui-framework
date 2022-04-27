@@ -1,0 +1,34 @@
+package amazon.utils;
+
+import amazon.factories.BundleFile;
+import org.apache.log4j.Logger;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import static amazon.utils.Constants.FILE_SEPARATOR;
+import static amazon.utils.Constants.PAGE_CONTENT_DIR;
+
+public class PropertiesUtil {
+    private final static Logger logger = Logger.getLogger(PropertiesUtil.class);
+
+    synchronized public static ResourceBundle getBundle(BundleFile bundleFile) {
+        String filePath = PAGE_CONTENT_DIR + FILE_SEPARATOR;
+        ResourceBundle bundle = null;
+        try {
+            File file = new File(filePath);
+            URL[] urls = {file.toURI().toURL()};
+            ClassLoader loader = new URLClassLoader(urls);
+            bundle = ResourceBundle.getBundle("HomePage", Locale.getDefault(), loader);
+        } catch (MalformedURLException e) {
+            String message = String.format("Failed to read the %s properties file", bundleFile.getName());
+            logger.error(message, e);
+            throw new RuntimeException(message);
+        }
+        return bundle;
+    }
+}
