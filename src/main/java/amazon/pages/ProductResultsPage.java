@@ -1,7 +1,10 @@
 package amazon.pages;
 
 import amazon.components.FilterComponent;
+import amazon.components.ProductResultsComponent;
+import amazon.components.SortComponent;
 import amazon.factories.BundleFile;
+import amazon.factories.PageFactory;
 import amazon.utils.AmazonDriver;
 import amazon.utils.PropertiesUtil;
 import org.openqa.selenium.By;
@@ -11,13 +14,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ProductResultsPage extends BasePage {
 
     public ProductResultsPage(AmazonDriver driver, BundleFile file) {
-        System.out.println(file);
         this.driver = driver;
         this.bundle = PropertiesUtil.getBundle(file);
     }
 
     public FilterComponent filterComponent() {
         return new FilterComponent(driver, BundleFile.PRODUCT_RESULTS_PAGE);
+    }
+
+    public SortComponent sortComponent() {
+        return new SortComponent(driver);
+    }
+
+    public ProductResultsComponent productResultsComponent() {
+        return new ProductResultsComponent(driver, BundleFile.PRODUCT_RESULTS_PAGE);
     }
 
     private By productsSearch() {
@@ -37,5 +47,13 @@ public class ProductResultsPage extends BasePage {
         String currentTitle = driver.getTitle();
         String expectedTitle = bundle.getString("pageTitle");
         assertEquals(expectedTitle, currentTitle, "Amazon Product results page browser title is incorrect.");
+    }
+
+    public ProductDetailsPage clickOnProduct(int index) {
+        logger.info("clickOnProduct(int index): " + index);
+        String clickedProductTitle = productResultsComponent().clickOnProduct(index);
+        ProductDetailsPage detailsPage = PageFactory.productDetailsPage(driver);
+        detailsPage.productTitle = clickedProductTitle;
+        return detailsPage;
     }
 }

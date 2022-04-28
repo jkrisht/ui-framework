@@ -25,8 +25,6 @@ public class FilterComponent extends BaseComponent {
     }
 
     public By selectFilter(Filter filter, FilterOption option) {
-        System.out.println("//div[@id='" + baseElement + "']//div[normalize-space()='" + filter.getFilterName() + "']" +
-                "/following-sibling::ul//a[normalize-space()='" + option.getFilterOptionName() + "']");
         return By.xpath("//div[@id='" + baseElement + "']//div[normalize-space()='" + filter.getFilterName() + "']" +
                 "/following-sibling::ul//a[normalize-space()='" + option.getFilterOptionName() + "']");
     }
@@ -50,8 +48,7 @@ public class FilterComponent extends BaseComponent {
 
     @Override
     public void waitForComponentToDisappear(int timeoutInSeconds) {
-        logger.info("FilterComponent - waitForComponentToDisappear");
-        driver.waitUntilElementNotVisible(baseElement(), timeoutInSeconds);
+        throw new RuntimeException("Method nor implemented.");
     }
 
     /**

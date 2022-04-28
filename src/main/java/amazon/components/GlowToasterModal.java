@@ -48,8 +48,10 @@ public class GlowToasterModal extends BaseComponent {
      */
     public void clickDoNotChangeButton() {
         logger.info("clickDoNotChangeButton()");
-        waitForComponentToLoad(10);
-        driver.clickElement(doNotChangeButton());
-        waitForComponentToDisappear(10);
+        if (driver.isDisplayed(baseElement())) {
+            waitForComponentToLoad(10);
+            driver.clickElement(doNotChangeButton());
+            waitForComponentToDisappear(10);
+        }
     }
 }
