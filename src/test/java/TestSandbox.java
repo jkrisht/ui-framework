@@ -43,7 +43,6 @@ public class TestSandbox {
         String aboutItem = productDetailsPage.getAboutDetailsOfProduct();
         Assertions.assertFalse(aboutItem.isBlank(), productDetailsPage.productTitle + " product about section is empty.");
         logger.info("About details of " + productDetailsPage.productTitle);
-        logger.info(aboutItem);
-        System.out.println(aboutItem);
+        logger.info("\n" + aboutItem);
     }
 }
