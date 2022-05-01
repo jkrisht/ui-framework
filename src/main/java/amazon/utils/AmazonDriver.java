@@ -1,5 +1,8 @@
 package amazon.utils;
 
+import amazon.config.EnvFactory;
+import amazon.factories.DriverFactory;
+import com.typesafe.config.Config;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,15 +16,27 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class AmazonDriver {
-    private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    private Logger logger = Logger.getLogger(AmazonDriver.class);
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static String HOME_PAGE_URL;
+    private final Logger logger = Logger.getLogger(AmazonDriver.class);
 
     public AmazonDriver(WebDriver driver) {
-        this.driver.set(driver);
+        AmazonDriver.driver.set(driver);
+    }
+
+    public static AmazonDriver getAmazonDriver() {
+        Config config = EnvFactory.getInstance().getConfig();
+        HOME_PAGE_URL = config.getString("HOME_PAGE_URL");
+        AmazonDriver aDriver = new AmazonDriver(DriverFactory.getDriver());
+        return aDriver;
     }
 
     protected WebDriver getDriver() {
         return driver.get();
+    }
+
+    public void navigateToHomePage() {
+        get(HOME_PAGE_URL);
     }
 
     public void get(String url) {
@@ -112,5 +127,11 @@ public class AmazonDriver {
         logger.info("selectDropdownValue(By by, String value): " + by + ", " + value);
         Select select = new Select(findElement(by));
         select.selectByValue(value);
+    }
+
+    public void quitDriver() {
+        logger.info("Quit the driver and close the browser");
+        driver.get().quit();
+        driver.set(null);
     }
 }

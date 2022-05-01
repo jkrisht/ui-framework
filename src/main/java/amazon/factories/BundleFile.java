@@ -1,6 +1,7 @@
 package amazon.factories;
 
 public enum BundleFile {
+    TEST("test"),
     HOME_PAGE("HomePage"),
     PRODUCT_RESULTS_PAGE("ProductResultsPage"),
     PRODUCT_DETAILS_PAGE("ProductDetailsPage");
