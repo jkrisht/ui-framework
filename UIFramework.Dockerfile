@@ -1,3 +1,15 @@
+# Execute below command to build an image with the dependencies
+# DOCKER_BUILDKIT=0 docker build -f UIFramework.Dockerfile -t clipboardautoimage:latest .
+
+# Execute below command to run spin up the container with the built image
+# docker run -d --privileged --name myc2 clipboardautoimage tail -f /dev/null
+
+# Execute below command to enter into docker console
+# docker exec -it myc2 bash
+
+# Execute below command to run the tests
+# mvn clean test
+
 FROM amd64/ubuntu:maven:3.6.0-jdk-11-slim
 
 ARG CHROME_VERSION=101.0.4951.41

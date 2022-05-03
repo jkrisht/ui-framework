@@ -1,11 +1,14 @@
+# Execute below command to build the images and run the containers
+# docker-compose up
+
 version: "3"
 services:
     hub:
         image: selenium/hub:latest
         ports:
-        - "4442:4442"
-        - "4443:4443"
-        - "4444:4444"
+            - "4442:4442"
+            - "4443:4443"
+            - "4444:4444"
 
     chrome:
         image: selenium/node-chrome:latest

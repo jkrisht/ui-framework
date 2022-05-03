@@ -1,15 +1,27 @@
+# Execute below command to build an image with the dependencies
+# docker build --platform linux/amd64 -f UIFramework2.Dockerfile -t clipboardauto:latest .
+
+# Execute below command to run spin up the container with the built image
+# docker run -d --privileged --name clipboarccontainer clipboardauto1 tail -f /dev/nul
+
+# Execute below command to enter into docker console
+# docker exec -it -u clipuser clipboarccontainer bash
+
+# Execute below command to run the tests
+# mvn clean test
+
 FROM maven:3.6.0-jdk-11-slim
 
 RUN dpkg --add-architecture amd64
 RUN dpkg --print-architecture
 
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends \
-	gnupg2 \
-    wget \
-    libcurl3 \
-    xdg-utils \
-    fonts-liberation
+  && apt-get install -y --no-install-recommends \
+  gnupg2 \
+  wget \
+  libcurl3 \
+  xdg-utils \
+  fonts-liberation
 
 #RUN useradd apps
 #RUN mkdir -p /home/apps && chown apps:apps /home/apps
