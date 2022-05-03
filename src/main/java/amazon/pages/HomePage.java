@@ -26,6 +26,7 @@ public class HomePage extends BasePage {
     @Override
     public void waitForPageLoad() {
         logger.info("Wait for Home page to load.");
+        driver.isPageLoadComplete();
         driver.waitUntilElementVisible(searchBox(), 10);
         verifyPageTitle();
     }

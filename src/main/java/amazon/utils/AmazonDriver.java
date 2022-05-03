@@ -19,6 +19,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 public class AmazonDriver {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -96,25 +97,16 @@ public class AmazonDriver {
     }
 
     public void isPageLoadComplete() {
-        int attempt = 1;
-        boolean pageLoadStatus = false;
-        while (attempt <= 5) {
-            pageLoadStatus = ((JavascriptExecutor) getDriver())
-                    .executeScript("return document.readyState").equals("complete");
-            wait(700);
-            if (pageLoadStatus) {
-                return;
-            }
-            attempt++;
-        }
-    }
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(60));
 
-    public void wait(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Function pageLoad = new Function() {
+            @Override
+            public Boolean apply(Object o) {
+                return ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").equals("complete");
+            }
+        };
+
+        wait.until(pageLoad);
     }
 
     // Wait until element is visible

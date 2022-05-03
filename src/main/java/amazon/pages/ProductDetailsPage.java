@@ -27,6 +27,7 @@ public class ProductDetailsPage extends BasePage {
     @Override
     public void waitForPageLoad() {
         logger.info("Wait for Home page to load.");
+        driver.isPageLoadComplete();
         driver.waitUntilElementVisible(baseElement(), 10);
         verifyPageTitle();
     }
