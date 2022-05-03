@@ -31,7 +31,7 @@ public class AllHamburgerMenuComponent extends BaseComponent {
 
     public By hamburgerSubMenuHeader(String menuName) {
         return By.xpath("//div[@id='hmenu-content']//div[contains(@class, 'hmenu-title')]" +
-                "[normalize-space()='" + menuName.toLowerCase() + "']");
+                "[normalize-space()='" + menuName + "']");
     }
 
     @Override
@@ -51,14 +51,14 @@ public class AllHamburgerMenuComponent extends BaseComponent {
         logger.info("clickHamburgerLink(AllHamburgerMenu menu): " + menu.getName());
         waitForComponentToLoad(10);
         driver.clickElement(hamburgerMenuLink(menu.getName()));
-        driver.waitUntilElementVisible(hamburgerSubMenuHeader(menu.getName()), 10);
+        driver.waitUntilElementVisible(hamburgerSubMenuHeader(menu.getSubMenuHeader()), 10);
     }
 
     // Click hamburger submenu link
     public void clickSubMenuLink(HamburgerSubMenu subMenu) {
         logger.info("clickSubMenuLink(AllHamburgerMenu menu): " + subMenu.getName());
         waitForComponentToLoad(10);
-        driver.clickElement(hamburgerMenuLink(subMenu.getName()));
+        driver.clickElementUsingJS(hamburgerMenuLink(subMenu.getName()));
         waitForComponentToDisappear(10);
     }
 

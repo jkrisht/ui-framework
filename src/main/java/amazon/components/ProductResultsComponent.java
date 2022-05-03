@@ -62,7 +62,7 @@ public class ProductResultsComponent extends BaseComponent {
         driver.waitUntilElementClickable(productLink(index), 10);
         String productTitle = driver.getText(productLink(index));
         driver.clickElement(productLink(index));
-        waitForComponentToDisappear(10);
+        waitForComponentToLoad(10);
         return productTitle;
     }
 }

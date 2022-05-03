@@ -6,6 +6,7 @@ import amazon.factories.DriverFactory;
 import com.typesafe.config.Config;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class AmazonDriver {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -41,7 +45,8 @@ public class AmazonDriver {
 
     public void maximizeWindow() {
         logger.info("Maximizing the browser window.");
-        getDriver().manage().window().maximize();
+        Dimension dimension = new Dimension(1920, 1080);
+        getDriver().manage().window().setSize(dimension);
     }
 
     public void navigateToHomePage() {
@@ -88,6 +93,28 @@ public class AmazonDriver {
     public void clickElementUsingJS(By by) {
         logger.info("Click on element using JS: " + by);
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click()", findElement(by));
+    }
+
+    public void isPageLoadComplete() {
+        int attempt = 1;
+        boolean pageLoadStatus = false;
+        while (attempt <= 5) {
+            pageLoadStatus = ((JavascriptExecutor) getDriver())
+                    .executeScript("return document.readyState").equals("complete");
+            wait(700);
+            if (pageLoadStatus) {
+                return;
+            }
+            attempt++;
+        }
+    }
+
+    public void wait(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     // Wait until element is visible
@@ -138,9 +165,18 @@ public class AmazonDriver {
         select.selectByValue(value);
     }
 
+    // Close the opened browsers
     public void quitDriver() {
         logger.info("Quit the driver and close the browser");
         driver.get().quit();
         driver.set(null);
+    }
+
+    // Switch between the windows
+    public void switchToWindow(int index) {
+        logger.info("Switch to the window: " + index);
+        Set<String> windows = getDriver().getWindowHandles();
+        List<String> windowsList = new ArrayList<>(windows);
+        getDriver().switchTo().window(windowsList.get(index - 1));
     }
 }

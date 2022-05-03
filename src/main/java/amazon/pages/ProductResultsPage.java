@@ -7,9 +7,8 @@ import amazon.factories.BundleFile;
 import amazon.factories.PageFactory;
 import amazon.utils.AmazonDriver;
 import amazon.utils.PropertiesUtil;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProductResultsPage extends BasePage {
 
@@ -31,12 +30,13 @@ public class ProductResultsPage extends BasePage {
     }
 
     private By productsSearch() {
-        return By.id("search");
+        return By.id("a-page");
     }
 
     @Override
     public void waitForPageLoad() {
         logger.info("Wait for Home page to load.");
+        driver.isPageLoadComplete();
         driver.waitUntilElementVisible(productsSearch(), 10);
         verifyPageTitle();
     }
@@ -46,7 +46,7 @@ public class ProductResultsPage extends BasePage {
         logger.info("Validating Products Results page title");
         String currentTitle = driver.getTitle();
         String expectedTitle = bundle.getString("pageTitle");
-        assertEquals(expectedTitle, currentTitle, "Amazon Product results page browser title is incorrect.");
+        Assertions.assertTrue(currentTitle.contains(expectedTitle), "Amazon Product results page browser title is incorrect.");
     }
 
     public ProductDetailsPage clickOnProduct(int index) {

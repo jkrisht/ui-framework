@@ -35,12 +35,14 @@ public class AmazonTests {
         homePage.waitForPageLoad();
         homePage.closeGlowToasterModal();
         ProductResultsPage productResultsPage =
-                homePage.clickHamburgerMenuLinksUnderAllNav(AllHamburgerMenu.COMPUTERS, HamburgerSubMenu.COMPUTER_COMPONENTS);
+                homePage.clickHamburgerMenuLinksUnderAllNav(
+                        AllHamburgerMenu.TV_APPLIANCES_ELECTRONICS, HamburgerSubMenu.TELEVISIONS);
         productResultsPage.waitForPageLoad();
-        productResultsPage.filterComponent().applyFilter(Filter.SELLER, FilterOption.SELLER_AMAZON);
+        productResultsPage.filterComponent().applyFilter(Filter.BRANDS, FilterOption.BRAND_SAMSUNG);
         productResultsPage.sortComponent().productsSortBy(SortBy.HIGH_TO_LOW);
 
         ProductDetailsPage productDetailsPage = productResultsPage.clickOnProduct(5);
+        driver.switchToWindow(2);
         productDetailsPage.waitForPageLoad();
         String aboutItem = productDetailsPage.getAboutDetailsOfProduct();
         Assertions.assertFalse(aboutItem.isBlank(), productDetailsPage.productTitle + " product about section is empty.");

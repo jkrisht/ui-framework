@@ -1,6 +1,7 @@
 package amazon.components.enums;
 
 public enum HamburgerSubMenu {
+    TELEVISIONS("Televisions"),
     COMPUTER_ACCESSORIES("Computer Accessories & Peripherals"),
     COMPUTER_COMPONENTS("Computer Components");
 

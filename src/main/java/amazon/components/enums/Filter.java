@@ -1,6 +1,7 @@
 package amazon.components.enums;
 
 public enum Filter {
+    BRANDS("Brands"),
     SELLER("Seller"),
     CONDITION("Condition");
 

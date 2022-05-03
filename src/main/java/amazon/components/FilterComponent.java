@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
 
 public class FilterComponent extends BaseComponent {
 
-    private final String baseElement = "filters";
+    private final String baseElement = "s-refinements";
 
     public FilterComponent(AmazonDriver driver, BundleFile file) {
         this.driver = driver;

@@ -1,6 +1,7 @@
 package amazon.components.enums;
 
 public enum FilterOption {
+    BRAND_SAMSUNG("Samsung"),
     SELLER_AMAZON("Amazon.com"),
     SELLER_CWP_ONLINE("CWP Online");
 
