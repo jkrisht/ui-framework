@@ -65,6 +65,7 @@ public class DriverFactory {
             case FIREFOX:
                 // fall - through. Same method for all browsers.
             case EDGE:
+                System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
                 return new RemoteWebDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getCapabilities(BROWSER));
             default:
                 throw new IllegalStateException(String.format("%s is not a valid browser choice. Pick your browser from %s.", BROWSER, java.util.Arrays.asList(BROWSER.values())));

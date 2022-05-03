@@ -1,5 +1,6 @@
 package amazon.utils;
 
+import amazon.choices.Browser;
 import amazon.config.EnvFactory;
 import amazon.factories.DriverFactory;
 import com.typesafe.config.Config;
@@ -28,11 +29,19 @@ public class AmazonDriver {
         Config config = EnvFactory.getInstance().getConfig();
         HOME_PAGE_URL = config.getString("HOME_PAGE_URL");
         AmazonDriver aDriver = new AmazonDriver(DriverFactory.getDriver());
+        if (! config.getString("BROWSER").equals(Browser.CHROME.label)) {
+            aDriver.maximizeWindow();
+        }
         return aDriver;
     }
 
     protected WebDriver getDriver() {
         return driver.get();
+    }
+
+    public void maximizeWindow() {
+        logger.info("Maximizing the browser window.");
+        getDriver().manage().window().maximize();
     }
 
     public void navigateToHomePage() {

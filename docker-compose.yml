@@ -1,0 +1,19 @@
+version: "3"
+services:
+    hub:
+        image: selenium/hub:latest
+        ports:
+        - "4442:4442"
+        - "4443:4443"
+        - "4444:4444"
+
+    chrome:
+        image: selenium/node-chrome:latest
+        depends_on:
+            - hub
+        shm_size: '4gb'
+        environment:
+            - HUB_HOST=hub
+            - SE_EVENT_BUS_HOST=hub
+            - SE_EVENT_BUS_PUBLISH_PORT=4442
+            - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
